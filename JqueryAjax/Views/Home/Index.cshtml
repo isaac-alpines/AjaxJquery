@@ -27,6 +27,13 @@
 
 <script>
     $(function () {
+
+        $("#loading").show(300, function () {
+            $("#list").load("/Home/GetData", function () {
+                $("#loading").hide(300);
+            });
+        });
+
         $("#btnLoad").click(function () {
 
             $("#list").empty();
