@@ -10,6 +10,7 @@
         </div>
         <div class="col-md-4 d-block">
             <button type="button" id="btnSend" class="btn btn-success">Send Data</button>
+            <button type="button" id="btnSendLoad" class="btn btn-success">Send&Load Data</button>
         </div>
     </div>
     <div class="col-md-12">
@@ -68,6 +69,19 @@
                     });;
                 });
             }
+        });
+
+        $("#btnSendLoad").click(function () {
+
+            $("#list").empty();
+
+            var txtData = $("#txtData").val();
+
+            $("#loading").show(300, function () {
+                $("#list").load("/Home/SetData", { listItem: txtData }, function () {
+                    $("#loading").hide(300);
+                });
+            });
         });
 
     });
