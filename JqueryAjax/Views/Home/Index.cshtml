@@ -11,11 +11,13 @@
         <div class="col-md-4 d-block">
             <button type="button" id="btnSend" class="btn btn-success">Send Data</button>
             <button type="button" id="btnSendLoad" class="btn btn-success">Send&Load Data</button>
+            <button type="button" id="btnSendAjax" class="btn btn-success">Send With Ajax</button>
         </div>
     </div>
     <div class="col-md-12">
         <hr />
         <button type="button" id="btnLoad" class="btn btn-success">Load Data</button>
+        <button type="button" id="btnLoadAjax" class="btn btn-success">Load With Ajax</button>
     </div>
     <div class="col-md-12">
         <hr />
@@ -82,6 +84,48 @@
                     $("#loading").hide(300);
                 });
             });
+        });
+
+
+        $("#btnLoadAjax").click(function () {
+
+            $.ajax({
+                method: "GET",
+                url: "/Home/GetData",
+                beforeSend: function () {
+                    $("#loading").show(300);
+                }
+            }).done(function (response) {
+                $("#list").html(response);
+            }).fail(function (response) {
+                alert(response);
+            }).always(function () {
+                $("#loading").hide(300);
+            });
+
+        });
+
+        $("#btnSendAjax").click(function () {
+
+            $("#list").empty();
+
+            var txtData = $("#txtData").val();
+
+            $.ajax({
+                method: "POST",
+                url: "/Home/SetData",
+                data: { listItem: txtData },
+                beforeSend: function () {
+                    $("#loading").show(300);
+                }
+            }).done(function (response) {
+                $("#list").html(response);
+            }).fail(function (response) {
+                alert(response);
+            }).always(function () {
+                $("#loading").hide(300);
+            });
+
         });
 
     });
