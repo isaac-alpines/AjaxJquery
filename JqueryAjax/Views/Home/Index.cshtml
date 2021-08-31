@@ -4,7 +4,16 @@
 }
 
 <div class="row">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" id="txtData" placeholder="Enter new list name..." class="form-control" />
+        </div>
+        <div class="col-md-4 d-block">
+            <button type="button" id="btnSend" class="btn btn-success">Send Data</button>
+        </div>
+    </div>
     <div class="col-md-12">
+        <hr />
         <button type="button" id="btnLoad" class="btn btn-success">Load Data</button>
     </div>
     <div class="col-md-12">
@@ -23,13 +32,36 @@
             $("#list").empty();
 
             $("#loading").show(300, function () {
+
                 $.get("/Home/GetData", function (response) {
                     $("#list").html(response);
-
+                }).fail(function (error) {
+                    alert("Hata oluştu: ".error);
+                }).always(function () {
                     $("#loading").hide(300);
                 });
+
             });
-    
+
         });
+
+        $("#btnSend").click(function () {
+            $("#list").empty();
+
+            var txtData = $("#txtData").val();
+
+            if (txtData != null) {
+                $("#loading").show(300, function () {
+                    $.post("/Home/SetData", { listItem: txtData }, function (response) {
+                        $("#list").html(response);
+                    }).fail(function (error) {
+                        alert("Hata oluştu: ".error);
+                    }).always(function () {
+                        $("#loading").hide(300);
+                    });;
+                });
+            }
+        });
+
     });
 </script>

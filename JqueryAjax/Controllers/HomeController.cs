@@ -21,5 +21,13 @@ namespace JqueryAjax.Controllers
 
             return PartialView("_DataItemPartial", listData);
         }
+
+        [HttpPost]
+        public PartialViewResult SetData(string listItem)
+        {
+            listData.Add(listItem);
+
+            return PartialView("_DataItemPartial", listData);
+        }
     }
 }
